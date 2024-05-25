@@ -1,7 +1,13 @@
 {% extends "layout.html" %}
 
 {% block body %}
+
+{% if name %}
+
+
 <h1>Add a book</h1>
+
+<h3>You are logged in as {{ name }}</h3>
 
 <form action="/addbook" method="post">
 
@@ -9,8 +15,26 @@
     <input name="Book" type="text" id="name" required="True">
     <label for="Author">Author name</label>    
     <input name="Author" type="text" id="author" required="True">
-    
     <input type="submit" value="Submit">
 </form>
+
+<form action="/logout" method="get">
+    <button type="submit">Logout</button>
+</form> <br>
+
+<form action="/booklist" method="get">
+    <button type="submit">Go to Book List</button>
+</form>
+
+
+{% else %}
+
+<h1>You are not Logged In </h1>
+
+<form action="/login" method="get">
+    <button type="submit">Log In</button>
+</form>
+
+{% endif %}
 
 {% endblock %}

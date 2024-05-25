@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>LOG IN HERE</h1>
+
+
+<form action="/login" method="post">
+
+    <label for="name">User Name</label>    
+    <input name="name" type="text" id="name" required="True"> 
+    
+    <button type="submit" value="Submit">Log in</button>
+</form>
+
+
+
+{% endblock %}

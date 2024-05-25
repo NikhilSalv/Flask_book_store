@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
+from flask_session import Session
 import sqlite3
 from cs50 import SQL
 import os
@@ -6,12 +7,25 @@ import os
 
 app = Flask(__name__)
 
+app.config["SESSION_PERMANENT"] = False
+app.config["SESSION_TYPE"] = "filesystem"
+Session(app)
+
 db = SQL("sqlite:///Books.db")
 
 
-@app.route("/")
+@app.route("/", methods = ["POST", "GET"])
 def index():
-    return render_template("index.html")
+
+    return render_template("index.html", name = session.get("name"))
+
+@app.route("/login", methods =["POST", "GET"])
+def login():
+    if request.method == "POST":
+        session["name"] = request.form.get("name")
+        return redirect("/")
+    return render_template("Login.html")
+
 
 @app.route("/addbook", methods= ["GET","POST"])
 def register():
@@ -22,7 +36,7 @@ def register():
             return redirect("/faliure")
         
         db.execute("INSERT INTO books (name, author) VALUES(?,?)", name, author)
-        return redirect("/booklist")
+        return redirect("/")
 
 @app.route("/faliure")
 def failure():
@@ -39,6 +53,11 @@ def deletebook(book_id):
         # book_id = request.form.get("book_id")
         db.execute("DELETE FROM books WHERE book_id = ?" , book_id)
         return redirect("/booklist")
+    
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect("/")
 
 
 
