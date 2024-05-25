@@ -53,13 +53,36 @@ def deletebook(book_id):
         # book_id = request.form.get("book_id")
         db.execute("DELETE FROM books WHERE book_id = ?" , book_id)
         return redirect("/booklist")
-    
+
+@app.route("/cart", methods=["GET", "POST"])
+def addtocart():
+    if "cart" not in session:
+        session["cart"] = []
+
+    if request.method == "POST":
+        book_id = request.form.get("book_id")
+        session["cart"].append(book_id)
+        return redirect("/booklist")
+    if request.method == "GET":
+        if session["cart"]:
+            placeholder = ", ".join("?" for _ in session["cart"])
+            query = f"SELECT * FROM books WHERE book_id IN ({placeholder})"
+            cart_list = db.execute(query, *session["cart"])
+        else:
+            cart_list = []
+        return render_template("cart.html", cart_list=cart_list)
+
+
+# @app.route("/showcart")
+# def showcart():
+#     cart_list = db.execute("SELECT * FROM books WHERE book_id IN (?)", session["cart"])
+#     return render_template("cart.html", cart_list=cart_list)
+
+
 @app.route("/logout")
 def logout():
     session.clear()
     return redirect("/")
-
-
 
 
 # name = "Book1"

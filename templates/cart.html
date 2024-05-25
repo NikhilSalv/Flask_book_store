@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+<h1>Your Cart</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Book id</th>
+            <th>Book name</th>
+            <th>Book Author</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in cart_list %}
+        <tr>
+            <td>{{ book['book_id'] }}</td>
+            <td>{{ book['name'] }}</td>
+            <td>{{ book['author'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<form action="/logout" method="get">
+    <button type="submit">Logout</button>
+</form> <br>
+
+<form action="/booklist" method="get">
+    <button type="submit">Go to Book List</button>
+</form>
+
+
+{% endblock %}
