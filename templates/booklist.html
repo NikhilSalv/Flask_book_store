@@ -9,6 +9,7 @@
             <th>Book id</th>
             <th>Book name</th>
             <th>Book Author</th>
+            <th>Add to cart</th>
             <th>DELETE</th>
         </tr>
     </thead>
@@ -19,8 +20,14 @@
             <td>{{ book['name'] }}</td>
             <td>{{ book['author'] }}</td>
             <td>
+                <form action="/cart" method="post">
+                    <input type="hidden" name="book_id" value="{{ book['book_id'] }}">
+                    <button type="submit">Add to cart</button>
+                </form>
+            </td>
+            <td>
                 <form action="/delete/{{ book['book_id'] }}" method="post">
-                    <input type="hidden" name="book_id" value="DELETE">
+                    <input type="hidden" name="book_id" value="{{ book['book_id'] }}">
                     <button type="submit">DELETE</button>
                 </form>
             </td>
@@ -29,13 +36,15 @@
     </tbody>
 </table>
 
-
 <form action="/logout" method="get">
     <button type="submit">Logout</button>
-</form>
+</form><br>
 
 <form action="/">
     <button type="submit">Go to main page</button>
-</form>
+</form><br>
 
+<form action="/cart" method="get">
+    <button type="submit">Go to cart</button>
+</form>
 {% endblock %}
