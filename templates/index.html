@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Add a book</h1>
+
+<form action="/addbook" method="post">
+
+    <label for="name">Book Name</label>        
+    <input name="Book" type="text" id="name" required="True">
+    <label for="Author">Author name</label>    
+    <input name="Author" type="text" id="author" required="True">
+    
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}

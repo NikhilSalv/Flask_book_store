@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Books registration</h1>
+
+<table border="1">
+    <thead>
+        <tr>
+            <th>Book id</th>
+            <th>Book name</th>
+            <th>Book Author</th>
+            <th>DELETE</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book in books %}
+        <tr>
+            <td>{{ book['book_id'] }}</td>
+            <td>{{ book['name'] }}</td>
+            <td>{{ book['author'] }}</td>
+            <td>
+                <form action="/delete/{{ book['book_id'] }}" method="post">
+                    <input type="hidden" name="book_id" value="DELETE">
+                    <button type="submit">DELETE</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
