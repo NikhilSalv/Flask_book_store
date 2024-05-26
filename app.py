@@ -58,6 +58,18 @@ def addtocart():
         book_id = request.form.get("book_id")
         session["cart"].append(book_id)
         return redirect("/booklist")
+
+
+@app.route("/cart", methods=["GET", "POST"])
+def addtocart():
+    if "cart" not in session:
+        session["cart"] = []
+
+    if request.method == "POST":
+        book_id = request.form.get("book_id")
+        session["cart"].append(book_id)
+        return redirect("/booklist")
+
     if request.method == "GET":
         if session["cart"]:
             placeholder = ", ".join("?" for _ in session["cart"])
@@ -66,6 +78,7 @@ def addtocart():
         else:
             cart_list = []
         return render_template("cart.html", cart_list=cart_list)
+
 
 @app.route("/logout")
 def logout():
